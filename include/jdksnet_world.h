@@ -123,6 +123,17 @@ extern void JDKSNET_ERROR_PROC( fmt, ... );
 
 bool jdksnet_init( void );
 
+int jdksnet_gettimeofday( struct timeval *tv );
+
+static inline uint64_t jdksnet_time_in_microseconds( void )
+{
+    uint64_t cur_time;
+    struct timeval tv;
+    jdksnet_gettimeofday( &tv );
+    cur_time = ( (uint64_t)tv.tv_sec * 1000000 ) + ( tv.tv_usec );
+    return cur_time;
+}
+
 #ifdef __cplusplus
 }
 #endif

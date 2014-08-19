@@ -3,6 +3,40 @@
 
 static bool jdksnet_initted = false;
 
+#ifdef _WIN32
+#pragma comment( lib, "IPHLPAPI.lib" )
+#pragma comment( lib, "Ws2_32.lib" )
+#if defined( _MSC_VER ) || defined( _MSC_EXTENSIONS )
+#define DELTA_EPOCH_IN_MICROSECS 11644473600000000Ui64
+#else
+#define DELTA_EPOCH_IN_MICROSECS 11644473600000000ULL
+#endif
+#endif
+
+int jdksnet_gettimeofday( struct timeval *tv )
+{
+#ifdef _WIN32
+    FILETIME ft;
+    unsigned __int64 tmpres = 0;
+    static int tzflag;
+    if ( NULL != tv )
+    {
+        GetSystemTimeAsFileTime( &ft );
+        tmpres |= ft.dwHighDateTime;
+        tmpres <<= 32;
+        tmpres |= ft.dwLowDateTime;
+        /*converting file time to unix epoch*/
+        tmpres /= 10; /*convert into microseconds*/
+        tmpres -= US_DELTA_EPOCH_IN_MICROSECS;
+        tv->tv_sec = (long)( tmpres / 1000000UL );
+        tv->tv_usec = (long)( tmpres % 1000000UL );
+    }
+    return 0;
+#else
+    return gettimeofday( tv, 0 );
+#endif
+}
+
 bool jdksnet_init( void )
 {
     if ( !jdksnet_initted )
