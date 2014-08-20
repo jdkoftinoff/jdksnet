@@ -1,4 +1,3 @@
-#pragma once
 /*
 Copyright (c) 2014, J.D. Koftinoff Software, Ltd.
 All rights reserved.
@@ -26,8 +25,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "jdksnet_world.h"
-#include "jdksnet_raw.h"
-#include "jdksnet_packet_signals.h"
-#include "jdksnet_packet_slots.h"
-#include "jdksnet_stream_signals.h"
-#include "jdksnet_stream_slots.h"
+#include "jdksnet_udp.h"
+
+
+const char *jdksnet_udp_filename = __FILE__;

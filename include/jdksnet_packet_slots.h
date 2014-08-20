@@ -26,8 +26,47 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "jdksnet_world.h"
-#include "jdksnet_raw.h"
-#include "jdksnet_packet_signals.h"
-#include "jdksnet_packet_slots.h"
-#include "jdksnet_stream_signals.h"
-#include "jdksnet_stream_slots.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+struct jdksnet_packet_slots;
+struct jdksnet_packet_signals;
+
+struct jdksnet_packet_slots
+{
+    /**
+     * Ask the object to terminate
+     */
+    void ( *terminate )( struct jdksnet_packet_slots *self );
+
+    /**
+     * Ask the object to send signals to the destination_signals object
+     */
+    void ( *connect_signals )( struct jdksnet_packet_slots *self, struct jdksnet_packet_signals *destination_signals );
+
+    /**
+     * Ask the object to disconnect sending of signals to the destinaiton_signals object
+     */
+    void ( *disconnect_signals )( struct jdksnet_packet_slots *self, struct jdksnet_packet_signals *destination_signals );
+
+    /**
+     * External Networking Request: The client object wants to wake up when the socket is writable
+     */
+    void ( *wake_on_writable )( struct jdksnet_packet_slots *self, bool enable );
+
+    /**
+     * External Networking Request: The client object wants to send a frame
+     */
+    ssize_t ( *send )( struct jdksnet_packet_slots *self, const struct jdksavdecc_frame *frame );
+
+    /**
+     * External Networking Request: The client object wants to be woken up in the future
+     */
+    void ( *wake_up )( struct jdksnet_packet_slots *self, uint64_t delta_time_in_microseconds );
+};
+
+#ifdef __cplusplus
+}
+#endif

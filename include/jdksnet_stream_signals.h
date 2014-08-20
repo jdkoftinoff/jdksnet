@@ -26,8 +26,46 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "jdksnet_world.h"
-#include "jdksnet_raw.h"
-#include "jdksnet_packet_signals.h"
-#include "jdksnet_packet_slots.h"
-#include "jdksnet_stream_signals.h"
-#include "jdksnet_stream_slots.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+struct jdksnet_stream_slots;
+struct jdksnet_stream_signals;
+
+struct jdksnet_stream_signals
+{
+    /**
+     * External Networking Event: The socket was readable and some data was read
+     */
+    void ( *readable )( struct jdksnet_stream_signals *self, const struct jdksavdecc_frame *frame );
+
+    /**
+     * External Networking Event: The socket was connected
+     */
+    void ( *connected )( struct jdksnet_stream_signals *self,
+                         const struct sockaddr *local_addr,
+                         socklen_t local_addr_len,
+                         const struct sockaddr *remote_addr,
+                         socklen_t remote_addr_len );
+
+    /**
+     * External Networking Event: The socket is writable now
+     */
+    void ( *writable )( struct jdksnet_stream_signals *self );
+
+    /**
+     * External Networking Event: The socket was closed
+     */
+    void ( *closed )( struct jdksnet_stream_signals *self );
+
+    /**
+     * External Networking Event: Some time passed
+     */
+    void ( *tick )( struct jdksnet_stream_signals *self, jdksavdecc_timestamp_in_microseconds timestamp );
+};
+
+#ifdef __cplusplus
+}
+#endif

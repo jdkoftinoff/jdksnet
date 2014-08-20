@@ -26,8 +26,33 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "jdksnet_world.h"
-#include "jdksnet_raw.h"
 #include "jdksnet_packet_signals.h"
 #include "jdksnet_packet_slots.h"
-#include "jdksnet_stream_signals.h"
-#include "jdksnet_stream_slots.h"
+#include "jdksnet_rawsock.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+struct jdksnet_raw;
+
+struct jdksnet_raw
+{
+    struct jdksnet_packet_slots m_slots;
+    struct jdksnet_packet_signals *m_target;
+
+    struct jdksnet_rawsock m_socket;
+    uint64_t m_last_tick_time;
+    bool m_link_status;
+    uint64_t m_wakeup_time;
+    bool m_wake_on_readable_enable;
+};
+
+bool jdksnet_raw_init( struct jdksnet_raw *self,
+                       const char *interface_name,
+                       int num_join_multicast_addr,
+                       const struct jdksavdecc_eui48 *join_multicast_addr );
+
+#ifdef __cplusplus
+}
+#endif

@@ -26,8 +26,47 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "jdksnet_world.h"
-#include "jdksnet_raw.h"
-#include "jdksnet_packet_signals.h"
-#include "jdksnet_packet_slots.h"
-#include "jdksnet_stream_signals.h"
-#include "jdksnet_stream_slots.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+struct jdksnet_packet_slots;
+struct jdksnet_packet_signals;
+
+struct jdksnet_packet_signals
+{
+    /**
+     * External Networking Event: The network port obtained link
+     */
+    void ( *link_up )( struct jdksnet_packet_signals *self, uint64_t bps, struct jdksavdecc_eui48 link_addr );
+
+    /**
+     * External Networking Event: The network port lost link
+     */
+    void ( *link_down )( struct jdksnet_packet_signals *self, uint64_t bps, struct jdksavdecc_eui48 link_addr );
+
+    /**
+     * External Networking Event: The socket was readable and some data was read
+     */
+    void ( *readable )( struct jdksnet_packet_signals *self, const struct jdksavdecc_frame *frame );
+
+    /**
+     * External Networking Event: The socket is writable now
+     */
+    void ( *writable )( struct jdksnet_packet_signals *self );
+
+    /**
+     * External Networking Event: The socket was closed
+     */
+    void ( *closed )( struct jdksnet_packet_signals *self );
+
+    /**
+     * External Networking Event: Some time passed
+     */
+    void ( *tick )( struct jdksnet_packet_signals *self, jdksavdecc_timestamp_in_microseconds timestamp );
+};
+
+#ifdef __cplusplus
+}
+#endif
