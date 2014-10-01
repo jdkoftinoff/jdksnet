@@ -38,7 +38,7 @@ struct jdksnet_udp;
 struct jdksnet_udp
 {
     struct jdksnet_packet_slots m_slots;
-    struct jdksnet_packet_signals *m_target;
+    struct jdksnet_packet_signals *m_signals;
 
     int m_fd;
     uint64_t m_last_tick_time;

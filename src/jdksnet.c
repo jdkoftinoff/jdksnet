@@ -32,6 +32,9 @@ int jdksnet_gettimeofday( struct timeval *tv )
         tv->tv_usec = (long)( tmpres % 1000000UL );
     }
     return 0;
+#elif defined( JDKSNET_BARE_METAL )
+#warning JDKSNET_BARE_METAL needs definition
+#warning
 #else
     return gettimeofday( tv, 0 );
 #endif
@@ -57,6 +60,8 @@ bool jdksnet_init( void )
         }
         jdksnet_initted = true;
         return true;
+#elif defined( JDKSNET_BARE_METAL )
+#warning JDKSNET_BARE_METAL needs definition
 #elif defined( __linux__ ) || defined( __APPLE__ )
         struct sigaction act;
         act.sa_handler = SIG_IGN;

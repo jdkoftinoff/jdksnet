@@ -36,6 +36,8 @@ struct jdksnet_packet_signals;
 
 struct jdksnet_packet_signals
 {
+    void *m_target;
+
     /**
      * External Networking Event: The network port obtained link
      */

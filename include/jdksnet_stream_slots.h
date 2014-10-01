@@ -34,8 +34,12 @@ extern "C" {
 struct jdksnet_stream_slots;
 struct jdksnet_stream_signals;
 
+/** Collection of function pointers used to control a TCP socket
+ */
 struct jdksnet_stream_slots
 {
+    void *m_target;
+
     /**
      * Ask the object to terminate
      */

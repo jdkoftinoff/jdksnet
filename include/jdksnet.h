@@ -31,3 +31,5 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "jdksnet_packet_slots.h"
 #include "jdksnet_stream_signals.h"
 #include "jdksnet_stream_slots.h"
+#include "jdksnet_tcp.h"
+#include "jdksnet_udp.h"

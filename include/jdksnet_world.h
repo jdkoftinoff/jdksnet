@@ -92,10 +92,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma comment( lib, "IPHLPAPI.lib" )
 #pragma comment( lib, "wpcap.lib" )
 #pragma comment( lib, "Ws2_32.lib" )
-static inline void bzero( void *buf, size_t sz )
-{
-    memset( buf, 0, sz );
-}
+static inline void bzero( void *buf, size_t sz ) { memset( buf, 0, sz ); }
+#elif JDKSNET_BARE_METAL
+#warning JDKSNET_BARE_METAL needs definition
 #endif
 
 #include "jdksavdecc.h"

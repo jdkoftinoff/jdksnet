@@ -34,8 +34,12 @@ extern "C" {
 struct jdksnet_stream_slots;
 struct jdksnet_stream_signals;
 
+/** Collection of function pointers that will be called when a networking event occurs
+ */
 struct jdksnet_stream_signals
 {
+    void *m_target;
+
     /**
      * External Networking Event: The socket was readable and some data was read
      */
